@@ -1,8 +1,9 @@
 from config import app
-from flask import request
+from flask import request, abort
 from models import ChatUser as User
 from config import bcrypt
 import jwt
+from decorators import login_required
 
 @app.route('/signup/', methods=['POST'])
 def signup():
@@ -26,13 +27,20 @@ def login():
     user = User.objects.filter(username=username).first() or User.objects.filter(email=email).first()
     if user:
         if bcrypt.check_password_hash(user.password, password):
+            user.is_login = True;user.save()
             username = user.username
-            token = jwt.encode({"username": username}, app.config['SECRET_KEY'])
+            token = jwt.encode({"username": username, "email": user.email}, app.config['SECRET_KEY'])
             return {"status": token}, 200
         else:
             return {"status": "Invalid password specified"}, 401
     else:
         return {"status": "A user with specified account credentials does not exist"}, 404
 
+
+@app.route("/add/")
+@login_required
+
+def add(current_user):
+    return {"status": "added"}
 
 app.run(debug=True)

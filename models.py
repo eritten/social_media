@@ -5,3 +5,4 @@ class ChatUser(db.Document):
     email = db.EmailField()
     telephone_number = db.StringField()
     password = db.StringField()
+    is_login = db.BooleanField(default=False)
