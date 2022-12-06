@@ -1,6 +1,6 @@
 from config import app
 from flask import request, abort
-from models import ChatUser as User
+from models import Property, ChatUser as User
 from config import bcrypt
 import jwt
 from decorators import login_required
@@ -46,5 +46,11 @@ def sign_out(current_user):
             return {"status": "Logout successful"}
         return {"status": "User is not authenticated"}, 403
     return {"status": "User cannot be found"}, 404
+
+@app.route("/add-property/", methods=["POST"])
+@login_required
+def add_property(current_user):
+   pass
+
 
 app.run(debug=True)
