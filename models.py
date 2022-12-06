@@ -19,7 +19,7 @@ class ChatUser(db.Document):
     password = db.StringField()
     is_login = db.BooleanField(default=False)
     last_login = db.DateTimeField(default=datetime.now())
-    properties = db.EmbeddedDocumentListField("Property")
+    properties = db.EmbeddedDocumentListField("Property", on_delete=db.CASCADE)
 
     def __str__(self):
         return self.username

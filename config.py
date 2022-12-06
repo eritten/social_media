@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_mongoengine import MongoEngine
 from flask_bcrypt import Bcrypt
+from flask_socketio import SocketIO
 
 app = Flask(__name__)
 db = MongoEngine(app)
@@ -11,3 +12,4 @@ app.config['MONGODB_SETTINGS'] = {
     'port': 12345
 }
 bcrypt = Bcrypt(app)
+socket = SocketIO(app)

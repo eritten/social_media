@@ -1,7 +1,7 @@
 from config import app
 from flask import request, abort
 from models import Property, ChatUser as User
-from config import bcrypt
+from config import bcrypt, socket
 import jwt
 from decorators import login_required
 
@@ -53,4 +53,4 @@ def add_property(current_user):
    pass
 
 
-app.run(debug=True)
+socket.run(app, debug=True)
