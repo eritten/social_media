@@ -36,11 +36,15 @@ def login():
     else:
         return {"status": "A user with specified account credentials does not exist"}, 404
 
-
-@app.route("/add/")
+@app.route("/sign_out/", methods=["POST"])
 @login_required
-
-def add(current_user):
-    return {"status": "added"}
+def sign_out(current_user):
+    user = User.objects.filter(username=request.json.get("username")).first()
+    if user:
+        if user.is_login:
+            user.is_login=False;user.save()
+            return {"status": "Logout successful"}
+        return {"status": "User is not authenticated"}, 403
+    return {"status": "User cannot be found"}, 404
 
 app.run(debug=True)
