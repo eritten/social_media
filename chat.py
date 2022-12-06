@@ -36,7 +36,7 @@ def login():
     else:
         return {"status": "A user with specified account credentials does not exist"}, 404
 
-@app.route("/sign_out/", methods=["POST"])
+@app.route("/sign-out/", methods=["POST"])
 @login_required
 def sign_out(current_user):
     user = User.objects.filter(username=request.json.get("username")).first()
